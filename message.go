@@ -15,7 +15,8 @@ type MessageInterface interface {
 	IsRelevantFor(user string) bool
 
 	Text() string
-	User() string
+	UserID() string
+	ChannelID() string
 }
 
 // Message is the Message structure for received and sent messages using Slack
@@ -23,7 +24,7 @@ type Message struct {
 	ID      uint64 `json:"id"`
 	Type    string `json:"type"`
 	Channel string `json:"channel"`
-	UserID  string `json:"user"`
+	User    string `json:"user"`
 	Message string `json:"text"`
 }
 
@@ -33,8 +34,13 @@ func (m Message) Text() string {
 }
 
 // User returns the message text
-func (m Message) User() string {
-	return m.UserID
+func (m Message) ChannelID() string {
+	return m.Channel
+}
+
+// User returns the message text
+func (m Message) UserID() string {
+	return m.User
 }
 
 // IsMessage checks if it is a Message or some other kind of processing information
@@ -44,7 +50,7 @@ func (m Message) IsMessage() bool {
 
 // IsFrom checks the sender of the message
 func (m Message) IsFrom(user string) bool {
-	return m.UserID == user
+	return m.User == user
 }
 
 // SetText updates the text of a message

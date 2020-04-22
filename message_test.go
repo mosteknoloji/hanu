@@ -10,7 +10,7 @@ func TestMessage(t *testing.T) {
 		Message: "text",
 	}
 
-	if msg.User() != "test" {
+	if msg.UserID() != "test" {
 		t.Errorf("User() should be \"test\"")
 	}
 

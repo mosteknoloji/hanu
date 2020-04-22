@@ -133,11 +133,15 @@ func (b *Bot) sendHelp(msg Message) {
 	}
 
 	if !msg.IsDirectMessage() {
-		help = "<@" + msg.User() + ">: " + help
+		help = "<@" + msg.UserID() + ">: " + help
 	}
 
 	msg.SetText(help)
 	websocket.JSON.Send(b.Socket, msg)
+}
+
+func (b *Bot) Close() {
+	b.Socket.Close()
 }
 
 // Listen for message on socket
